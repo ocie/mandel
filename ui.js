@@ -6,9 +6,17 @@
     let r0 = 0
     let i0 = 0
     let range = 3
+    let cycles = 2550
 
     const ctx = drawingCanvas.getContext('2d')
     const imageData = ctx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height)
+
+    let clut = []
+    for (var i=0; i<256; i++) {
+        clut[i]=[Math.floor(Math.random()*256),
+            Math.floor(Math.random()*256),
+            Math.floor(Math.random()*256)]
+    }
 
     let workers = []
     for (let i = 0; i < NUM_WORKERS; i++) {
@@ -21,9 +29,13 @@
 
             for (let i = 0; i < data.width; i++) {
                 const idx = 4 * (i + imageData.height * data.y)
-                imageData.data[idx] =
-                    imageData.data[idx + 1] =
-                    imageData.data[idx + 2] = data.values[i] % 256
+                const iterations = data.values[i]
+
+                if (iterations == cycles) {
+                    [imageData.data[idx], imageData.data[idx + 1], imageData.data[idx + 2]] = [0,0,0]                    
+                } else {
+                    [imageData.data[idx], imageData.data[idx + 1], imageData.data[idx + 2]] = clut[iterations % 256]
+                }
                 imageData.data[idx + 3] = 255
             }
             ctx.putImageData(imageData, 0, 0)
@@ -54,7 +66,7 @@
                 r0,
                 i0,
                 range,
-                cycles: 2550
+                cycles
             }
             workers[y % NUM_WORKERS].postMessage(request)
         }

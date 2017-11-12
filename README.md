@@ -5,13 +5,15 @@ Items to do:
 
 ~~separate Javascript~~
 
-- better colors
+~~better colors~~
+
+- take full window size
+
+- responsive menu
 
 - zoom out
 
 - enable offline mode
-
-- take full window size
 
 - add styling
 
@@ -19,8 +21,15 @@ Items to do:
 
 - pinch zoom
 
+- shared buffer
+
 - heuristic iteration limit
 
 - add dwell detection
 
+- pallete selection
+
+- interior color
+
+- coloring rule selection
 
