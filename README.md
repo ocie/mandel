@@ -11,7 +11,9 @@ Items to do:
 ~~can rezize, but body still has a margin~~
 ~~I wasn't actually including the css~~
 
-- queue work in ui
+~queue work in ui~
+
+- shared buffer
 
 - responsive menu
 
@@ -24,8 +26,6 @@ Items to do:
 - scale previous image while computing
 
 - pinch zoom
-
-- shared buffer
 
 - heuristic iteration limit
 

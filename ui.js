@@ -4,7 +4,13 @@
     const resize = () => {
         drawingCanvas.width = drawingCanvas.clientWidth
         drawingCanvas.height = drawingCanvas.clientHeight
+        ctx = drawingCanvas.getContext('2d')
+        imageData = ctx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height)
     }
+
+    let queue=[]
+    let ctx
+    let imageData
 
     resize()
 
@@ -19,9 +25,6 @@
     let i0 = 0
     let range = 3
     let cycles = 2550
-
-    const ctx = drawingCanvas.getContext('2d')
-    const imageData = ctx.getImageData(0, 0, drawingCanvas.width, drawingCanvas.height)
 
     let clut = []
     for (var i=0; i<256; i++) {
@@ -52,6 +55,9 @@
             }
             ctx.putImageData(imageData, 0, 0)
 
+            if (queue.length>0) {
+                workers[i].postMessage(queue.pop())
+            }
         }
     }
 
@@ -65,11 +71,13 @@
 
     const drawFigure = function () {
 
-        for (let y = 0; y < imageData.height; y++) {
+        queue=[]
+
+        for (let y = imageData.height; y>=0; y--) {
             const [re1, im] = mapToComplex(0, y)
             const re2 = mapToComplex(imageData.width - 1, y)[0]
 
-            const request = {
+            queue.push({
                 re1,
                 re2,
                 im,
@@ -80,8 +88,11 @@
                 i0,
                 range,
                 cycles
-            }
-            workers[y % NUM_WORKERS].postMessage(request)
+            })
+        }
+
+        for (let i=0;i<NUM_WORKERS;i++) {
+            workers[i].postMessage(queue.pop())            
         }
     }
 
