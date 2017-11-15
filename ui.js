@@ -1,6 +1,18 @@
 (function () {
     const drawingCanvas = document.getElementById('drawingCanvas')
 
+    const resize = () => {
+        drawingCanvas.width = drawingCanvas.clientWidth
+        drawingCanvas.height = drawingCanvas.clientHeight
+    }
+
+    resize()
+
+    window.onresize = () => {
+        resize()
+        drawFigure()
+    }
+
     const NUM_WORKERS = 10
 
     let r0 = 0
@@ -23,12 +35,12 @@
         workers[i] = new Worker('worker.js')
         workers[i].onmessage = function (e) {
             const data = e.data
-            if (data.r0 != r0 || data.i0 != i0 || data.range != range) {
+            if (data.r0 != r0 || data.i0 != i0 || data.range != range || data.height != imageData.height || data.width != imageData.width) {
                 return
             }
 
             for (let i = 0; i < data.width; i++) {
-                const idx = 4 * (i + imageData.height * data.y)
+                const idx = 4 * (i + imageData.width * data.y)
                 const iterations = data.values[i]
 
                 if (iterations == cycles) {
@@ -53,7 +65,7 @@
 
     const drawFigure = function () {
 
-        for (let y = 0; y < imageData.width; y++) {
+        for (let y = 0; y < imageData.height; y++) {
             const [re1, im] = mapToComplex(0, y)
             const re2 = mapToComplex(imageData.width - 1, y)[0]
 
@@ -62,6 +74,7 @@
                 re2,
                 im,
                 width: imageData.width,
+                height: imageData.height,
                 y,
                 r0,
                 i0,
@@ -73,7 +86,7 @@
     }
 
 
-    drawFigure()
+    document.addEventListener('DOMContentLoaded', drawFigure)
 
     drawingCanvas.addEventListener('click', e => {
         const x = e.pageX - drawingCanvas.offsetLeft

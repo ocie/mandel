@@ -7,7 +7,11 @@ Items to do:
 
 ~~better colors~~
 
-- take full window size
+~~take full window size~~
+~~can rezize, but body still has a margin~~
+~~I wasn't actually including the css~~
+
+- queue work in ui
 
 - responsive menu
 
