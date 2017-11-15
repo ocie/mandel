@@ -53,7 +53,10 @@
                 }
                 imageData.data[idx + 3] = 255
             }
-            ctx.putImageData(imageData, 0, 0)
+
+            if (queue.length % 50 == 0) {
+                ctx.putImageData(imageData, 0, 0)
+            }
 
             if (queue.length>0) {
                 workers[i].postMessage(queue.pop())

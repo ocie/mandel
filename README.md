@@ -13,8 +13,6 @@ Items to do:
 
 ~queue work in ui~
 
-- shared buffer
-
 - responsive menu
 
 - zoom out
