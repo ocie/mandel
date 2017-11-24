@@ -13,6 +13,9 @@ Items to do:
 
 ~queue work in ui~
 
+- arbitraty preceision fp library
+  _ This was much too slow
+  
 - responsive menu
 
 - zoom out
