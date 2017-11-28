@@ -14,7 +14,10 @@ Items to do:
 ~queue work in ui~
 
 - arbitraty preceision fp library
-  _ This was much too slow
+  - This was much too slow.
+  - setting a fixed precison might work
+  - this is still very slow. bigfloat should be faster
+  - need some sort of packager to allow import of bigfloat
   
 - responsive menu
 
@@ -38,3 +41,4 @@ Items to do:
 
 - coloring rule selection
 
+- offload work to Lambda
